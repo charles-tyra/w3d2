@@ -1,9 +1,16 @@
 class Card
-    attr_reader :value
     def initialize(value)
         @value = value
         @face_down = true
     end 
+
+    def value()
+        if @face_down
+            return " "
+        else
+            @value
+        end
+    end
 
     def hide()
         @face_down = true
@@ -17,13 +24,7 @@ class Card
         self.value == other_card.value
     end
 
-    def valPrint()
-        if !@face_down
-            print(@value)
-        end
-    end
-    
     def to_s
-        return "Value: #{@value} face_down: #{@face_down}"
+        return value
     end
 end
