@@ -22,19 +22,19 @@ class Board
         while remaining_pairs > 0
             current_card = alphabet_whatever[rand(alphabet_whatever.length)]
             alphabet_whatever[alphabet_whatever.index(current_card)] = ""
-            puts "current card" + current_card.to_s
+            # puts "current card" + current_card.to_s
             while card_placed < 2
                 samp_row, samp_col = rand(max), rand(max)
             
                 if @grid[samp_row][samp_col].cheat == nil
-                    puts "row, col" + samp_row.to_s + samp_col.to_s
+                    # puts "row, col" + samp_row.to_s + samp_col.to_s
                     @grid[samp_row][samp_col] = Card.new(current_card)
                     card_placed += 1
-                    puts "card placed" + card_placed.to_s
+                    # puts "card placed" + card_placed.to_s
                 end
             end
             remaining_pairs -= 1
-            puts "remaining pairs" + remaining_pairs.to_s
+            # puts "remaining pairs" + remaining_pairs.to_s
             card_placed = 0
         end
     end
@@ -51,6 +51,6 @@ class Board
     end
 
     def won?
-        @grid.all? {|row| row.all?{|pos| pos != " "}}
+        @grid.all? {|row| row.all?{|pos| pos.value != " "}}
     end
 end
