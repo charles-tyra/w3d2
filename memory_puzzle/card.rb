@@ -27,4 +27,8 @@ class Card
     def to_s
         return value
     end
+
+    def cheat
+        @value
+    end
 end

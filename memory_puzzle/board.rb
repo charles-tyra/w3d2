@@ -22,7 +22,7 @@ class Board
             while card_placed < 2
                 samp_row, samp_col = rand(max), rand(max)
             
-                if @grid[samp_row][samp_col] == Card.new(nil)
+                if @grid[samp_row][samp_col].cheat == nil
                     puts "row, col" + samp_row.to_s + samp_col.to_s
                     @grid[samp_row][samp_col] = Card.new(current_card)
                     card_placed += 1
