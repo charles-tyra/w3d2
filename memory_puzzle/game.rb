@@ -31,6 +31,8 @@ class Game
                 sleep(3)
                 @board[pos].hide
                 @board[@previous_guess].hide
+            else
+                @player.receive_matched(pos, @previous_guess)
             end
             system("clear")
         end
