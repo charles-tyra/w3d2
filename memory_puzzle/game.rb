@@ -1,31 +1,32 @@
 require_relative 'board.rb'
 require_relative 'card.rb'
+require_relative 'notaiplayer.rb'
+require_relative 'computer_player.rb"'
 
 class Game
-    def initialize()
+    def initialize(player = Not_AI_Player.new)
         @board = Board.new
         @board.populate
         @previous_guess
+        @player = player
     end
 
     def play_loop
         while !game_over?
             @board.render
-            puts "input position like `row col` with a maximum value of #{@board.grid.length}"
-            pos = gets.chomp.split(' ').map{|coord| coord.to_i}
+            pos = @player.get_input
             if pos.length != 2
                 raise 'please input a valid position'
             end
             @board.reveal(pos)
+            @player.receive_known_card(pos, @board[pos].value)
             @previous_guess = pos
             @board.render
 
-            puts "please input another position like `row col` with a maximum value of #{@board.grid.length}"
-            pos = gets.chomp.split(' ').map{|coord| coord.to_i}
-
+            pos = @player.get_input
             @board.reveal(pos)
+            @player.receive_known_card(pos, @board[pos].value)
             @board.render
-
             if !make_guess?(pos)
                 sleep(3)
                 @board[pos].hide
