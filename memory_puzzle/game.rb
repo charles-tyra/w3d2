@@ -1,10 +1,10 @@
 require_relative 'board.rb'
 require_relative 'card.rb'
 require_relative 'notaiplayer.rb'
-require_relative 'computer_player.rb"'
+require_relative 'computer_player.rb'
 
 class Game
-    def initialize(player = Not_AI_Player.new)
+    def initialize(player = Computer_Player.new)
         @board = Board.new
         @board.populate
         @previous_guess
@@ -14,7 +14,7 @@ class Game
     def play_loop
         while !game_over?
             @board.render
-            pos = @player.get_input
+            pos = @player.get_input(@board)
             if pos.length != 2
                 raise 'please input a valid position'
             end
@@ -23,7 +23,7 @@ class Game
             @previous_guess = pos
             @board.render
 
-            pos = @player.get_input
+            pos = @player.get_input(@board)
             @board.reveal(pos)
             @player.receive_known_card(pos, @board[pos].value)
             @board.render

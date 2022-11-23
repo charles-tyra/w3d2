@@ -1,8 +1,9 @@
 require_relative 'board.rb'
 
 class Computer_Player
+    attr_writer :first_guess
     def initialize
-        @card_hash = { |h, k| h[k] = [] }
+        @card_hash = Hash.new { |h, k| h[k] = [] }
         @matched = []
         @first_guess = " "
         @currval = ""
@@ -23,8 +24,7 @@ class Computer_Player
 
     def get_known_valid_pairs
         pairs = @card_hash.values.select{|arr| arr.length > 1}
-        pairs.reject!{|arr| @matched.include?(arr)}
-        pairs
+        pairs.reject{|arr| @matched.include?(arr)}
     end
 
     def get_random_guess(board)
@@ -47,14 +47,14 @@ class Computer_Player
         elsif @card_hash[@currval].length > 1
             return @card_hash[@currval][0]
         else
-            return get_random_guess
+            return get_random_guess(board)
         end
     end
 
     def get_input(board)
         if @first_guess == " "
             @first_guess = first_guess(board)
-            return @first_guess
+            return @first_guess.dup
         else
             second = second_guess(board)
             @first_guess = " "
@@ -71,5 +71,12 @@ class Computer_Player
         # else
         #     @first_guess = " "
         # end
-    end
+    end 
 end
+
+comp = Computer_Player.new
+board = Board.new
+
+board.populate
+comp.first_guess = [0,0]
+p comp.get_input(board)
